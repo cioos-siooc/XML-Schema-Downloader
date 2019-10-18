@@ -4,7 +4,7 @@ Use this Python 3 script to recursively download an XSD schema and all linked sc
 
 It supports relative XSD schemaLocations, eg `<import schemaLocation="../../../../abc`.
 
-# Instalation
+# Installation
 
 Active your python3 environment, eg:
 `source activate python3`

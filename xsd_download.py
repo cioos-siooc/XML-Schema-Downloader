@@ -31,7 +31,7 @@ def localize_links(url, text, filename_complete):
 
 
 def save_file(url, text):
-    'save the XSD text data to '
+    'save the XSD `text` data to file path decided by `url`'
     filename_complete = url_to_path(url)
     dir_name = os.path.dirname(XSD_DIR + '/' + filename_complete)
 
@@ -39,7 +39,6 @@ def save_file(url, text):
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
 
-    # TODO
     f = open(XSD_DIR + '/' + filename_complete, "w")
     text_localized = localize_links(url, text, filename_complete)
     f.write(text_localized)
@@ -53,7 +52,7 @@ def download_url(url):
 
 
 # list of the URLs that have been downloaded already
-downloaded = []
+downloaded_urls = []
 
 
 def recursive_get_schema_locations(url):
@@ -61,18 +60,18 @@ def recursive_get_schema_locations(url):
         stops when... TODO
     """
     # dont download same link twice
-    if url not in downloaded:
-        downloaded.append(url)
+    if url not in downloaded_urls:
+        downloaded_urls.append(url)
         try:
-            data = download_url(url)
+            xsd_data = download_url(url)
         except urllib.error.URLError as e:
             print('ERROR loading {} REASON: {} '.format(url, e.reason))
             return
         # all the XSDs linked from this file via schemaLocation
-        schema_locations = re.findall('schemaLocation="(.*)"', data)
+        schema_locations = re.findall('schemaLocation="(.*)"', xsd_data)
 
         # write this file in the directory structure
-        save_file(url, data)
+        save_file(url, xsd_data)
 
         # iterate through all schemaLocation URLs
         for schema_location in schema_locations:
