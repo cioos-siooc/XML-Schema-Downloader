@@ -4,12 +4,14 @@ import urllib.request
 from urllib.parse import urljoin, urlparse
 import click
 
+XSD_DIR = 'xsd'
+
 
 def url_to_path(url):
     'turns a URL to an XSD into a filesystem path'
     parsed = urlparse(url)
     # file structure like ./www.example.come/a/b/c.xsd
-    path = './' + parsed.netloc + parsed.path
+    path = parsed.netloc + parsed.path
     return path
 
 
@@ -31,14 +33,14 @@ def localize_links(url, text, filename_complete):
 def save_file(url, text):
     'save the XSD text data to '
     filename_complete = url_to_path(url)
-    dir_name = os.path.dirname(filename_complete)
+    dir_name = os.path.dirname(XSD_DIR + '/' + filename_complete)
 
     # create directory structure
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
 
     # TODO
-    f = open(filename_complete, "w")
+    f = open(XSD_DIR + '/' + filename_complete, "w")
     text_localized = localize_links(url, text, filename_complete)
     f.write(text_localized)
     f.close()
