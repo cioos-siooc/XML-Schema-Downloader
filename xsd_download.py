@@ -3,8 +3,19 @@ import re
 import urllib.request
 from urllib.parse import urljoin, urlparse
 import click
+from lxml import etree
 
 XSD_DIR = 'xsd'
+
+
+
+def remove_comments_from_xml(xml_bytes):
+    'takes XML in bytes, returns string of XML with comments removed'
+    # etree wont let us use XML with an encoding string
+    # so passing it before decoding
+    tree = etree.fromstring(xml_bytes, parser=etree.XMLParser(
+        remove_comments=True))
+    return etree.tostring(tree).decode("utf-8")
 
 
 def url_to_path(url):
@@ -48,14 +59,14 @@ def save_file(url, text):
 def download_url(url):
     'Fetches URL, returns text of the document'
     response = urllib.request.urlopen(url)
-    return response.read().decode('utf-8')
+    return response.read()
 
 
 # list of the URLs that have been downloaded already
 downloaded_urls = []
 
 
-def recursive_get_schema_locations(url):
+def recursive_get_schema_locations(url, referring_url):
     """ Recursive function that is the heart of the script,
         stops when... TODO
     """
@@ -64,14 +75,18 @@ def recursive_get_schema_locations(url):
         downloaded_urls.append(url)
         try:
             xsd_data = download_url(url)
+
         except urllib.error.URLError as e:
-            print('ERROR loading {} REASON: {} '.format(url, e.reason))
+            print('ERROR loading {} , refernced in {} REASON: {} '
+                  .format(url, referring_url, e.reason))
             return
+
         # all the XSDs linked from this file via schemaLocation
-        schema_locations = re.findall('schemaLocation="([^"]*)"', xsd_data)
+        schema_locations = re.findall(
+            'schemaLocation="([^"]*)"', remove_comments_from_xml(xsd_data))
 
         # write this file in the directory structure
-        save_file(url, xsd_data)
+        save_file(url, xsd_data.decode('utf-8'))
 
         # iterate through all schemaLocation URLs
         for schema_location in schema_locations:
@@ -82,7 +97,7 @@ def recursive_get_schema_locations(url):
 
             line = urljoin(url, schema_location)
             print(line)
-            recursive_get_schema_locations(line)
+            recursive_get_schema_locations(line, url)
 
 
 @click.command()
@@ -90,7 +105,7 @@ def recursive_get_schema_locations(url):
 def main(xsd_url):
     """Recursive xsd downloader that suports relative imports"""
     print("Downloading schema files:")
-    recursive_get_schema_locations(xsd_url)
+    recursive_get_schema_locations(xsd_url, xsd_url)
 
 
 if __name__ == '__main__':
