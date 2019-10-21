@@ -68,7 +68,7 @@ def recursive_get_schema_locations(url):
             print('ERROR loading {} REASON: {} '.format(url, e.reason))
             return
         # all the XSDs linked from this file via schemaLocation
-        schema_locations = re.findall('schemaLocation="(.*)"', xsd_data)
+        schema_locations = re.findall('schemaLocation="([^"]*)"', xsd_data)
 
         # write this file in the directory structure
         save_file(url, xsd_data)
