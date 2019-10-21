@@ -8,7 +8,6 @@ from lxml import etree
 XSD_DIR = 'xsd'
 
 
-
 def remove_comments_from_xml(xml_bytes):
     'takes XML in bytes, returns string of XML with comments removed'
     # etree wont let us use XML with an encoding string
