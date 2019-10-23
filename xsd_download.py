@@ -25,11 +25,13 @@ def url_to_path(url):
     return path
 
 
-def localize_links(url, text, filename_complete):
+def localize_links(text, filename_complete):
     """ Similar to wget's --convert-links, this converts the schemaLocation
         links to be useable on local filesystem
     """
-    schema_locations = re.findall('schemaLocation="(http.*)"', text)
+    # only converting the url-based schemaLocations here
+    # eg, some will schemaLocation="../abc.xsd"
+    schema_locations = re.findall('schemaLocation="(http[^"]*)"', text)
 
     for schema_location in schema_locations:
         path_url = url_to_path(schema_location)
@@ -50,7 +52,7 @@ def save_file(url, text):
         os.makedirs(dir_name)
 
     f = open(XSD_DIR + '/' + filename_complete, "w")
-    text_localized = localize_links(url, text, filename_complete)
+    text_localized = localize_links(text, filename_complete)
     f.write(text_localized)
     f.close()
 
@@ -58,7 +60,8 @@ def save_file(url, text):
 def download_url(url):
     'Fetches URL, returns text of the document'
     response = urllib.request.urlopen(url)
-    return response.read()
+    xml_without_comments = remove_comments_from_xml(response.read())
+    return xml_without_comments
 
 
 # list of the URLs that have been downloaded already
@@ -82,10 +85,10 @@ def recursive_get_schema_locations(url, referring_url):
 
         # all the XSDs linked from this file via schemaLocation
         schema_locations = re.findall(
-            'schemaLocation="([^"]*)"', remove_comments_from_xml(xsd_data))
+            'schemaLocation="([^"]*)"', xsd_data)
 
         # write this file in the directory structure
-        save_file(url, xsd_data.decode('utf-8'))
+        save_file(url, xsd_data)
 
         # iterate through all schemaLocation URLs
         for schema_location in schema_locations:
