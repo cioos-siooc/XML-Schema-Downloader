@@ -1,7 +1,6 @@
 import unittest
 
-from xsd_download import (remove_comments_from_xml,
-                          url_to_path,
+from xsd_download import (url_to_path,
                           localize_links,
                           # save_file,
                           # download_url,
@@ -11,11 +10,6 @@ from xsd_download import (remove_comments_from_xml,
 
 class TestXSDDownload(unittest.TestCase):
     """Tests for xsd_download."""
-
-    def test_remove_comments_from_xml(self):
-        self.assertEqual('<xml>abc</xml>',
-                         remove_comments_from_xml
-                         (b'<xml>abc<!-- comment --></xml>'))
 
     def test_url_to_path(self):
         self.assertEqual('example.com/test/a/b/c/',
