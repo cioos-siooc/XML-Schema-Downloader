@@ -6,16 +6,14 @@ It supports relative XSD schemaLocations, eg `<import schemaLocation="../../../.
 
 ## Installation
 
-If needed, install `virtualenv`
+If needed, install `virtualenv`. Install repo in a new Python 3 environment:
 
-`pip install virtualenv --user`
-
-Create and activate a new Python 3 environment:
-`virtualenv -p python3 venv`
-`source venv/bin/activate`
-
-Install requirements:
-`pip install -r requirements.txt`
+```sh
+pip install virtualenv --user
+virtualenv -p python3 venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
 
 ## Running
 
