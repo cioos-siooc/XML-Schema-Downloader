@@ -1,17 +1,28 @@
+#!/bin/env python3
+# pylint: disable=no-value-for-parameter
+
+"""
+
+XSD Downloader
+
+"""
+
+
 import os
 import re
 import urllib.request
 from urllib.parse import urljoin, urlparse
+
 import click
 from lxml import etree
 
-XSD_DIR = 'xsd'
+XSD_DIR = "xsd"
 
 
 def url_to_path(url: str) -> str:
-    '''turns a URL to an XSD into a filesystem path
-       eg "http://www.example.come/a/b/c.xsd" -> "./www.example.come/a/b/c.xsd"
-    '''
+    """turns a URL to an XSD into a filesystem path
+    eg "http://www.example.come/a/b/c.xsd" -> "./www.example.come/a/b/c.xsd"
+    """
     parsed = urlparse(url)
 
     path = parsed.netloc + parsed.path
@@ -19,8 +30,8 @@ def url_to_path(url: str) -> str:
 
 
 def localize_links(text: str, filename_complete: str) -> str:
-    """ Similar to wget's --convert-links, this converts the schemaLocation
-        links to be useable on local filesystem
+    """Similar to wget's --convert-links, this converts the schemaLocation
+    links to be useable on local filesystem
     """
     # only converting the url-based schemaLocations here
     # eg, some will schemaLocation="../abc.xsd"
@@ -29,48 +40,47 @@ def localize_links(text: str, filename_complete: str) -> str:
     for schema_location in schema_locations:
         path_url = url_to_path(schema_location)
         rel_path = os.path.relpath(
-            os.path.dirname(path_url), os.path.dirname(filename_complete))
+            os.path.dirname(path_url), os.path.dirname(filename_complete)
+        )
         base_name = os.path.basename(path_url)
-        text = text.replace(schema_location, rel_path + '/' + base_name)
+        text = text.replace(schema_location, rel_path + "/" + base_name)
     return text
 
 
 def save_file(url: str, text: str) -> None:
-    '''save the XSD `text` data to file path decided by `url`
-       also creates the directory structure if it doesn't exist
-    '''
+    """save the XSD `text` data to file path decided by `url`
+    also creates the directory structure if it doesn't exist
+    """
     filename_complete = url_to_path(url)
-    dir_name = os.path.dirname(XSD_DIR + '/' + filename_complete)
+    dir_name = os.path.dirname(XSD_DIR + "/" + filename_complete)
 
     # create directory structure
     if not os.path.exists(dir_name):
         os.makedirs(dir_name)
 
-    with open(XSD_DIR + '/' + filename_complete, "w") as f:
+    with open(XSD_DIR + "/" + filename_complete, "w") as f:
         text_localized = localize_links(text, filename_complete)
         f.write(text_localized)
         f.close()
 
 
 def download_xml_url(url: str) -> str:
-    'Fetches URL, returns text of the document'
+    "Fetches URL, returns text of the document"
     response = urllib.request.urlopen(url).read()
-    tree = etree.fromstring(response, parser=etree.XMLParser(
-        remove_comments=True))
+    tree = etree.fromstring(response, parser=etree.XMLParser(remove_comments=True))
     xml = etree.tostring(tree).decode("utf-8")
     return xml
 
 
 def download_schema(url):
-    ''' Calls the recursive function recursive_get_schema_locations()
-    '''
+    """Calls the recursive function recursive_get_schema_locations()"""
     # list of the URLs that have been downloaded already
     downloaded_urls = []
 
     def recursive_get_schema_locations(url: str, referring_url: str) -> None:
-        ''' Recursive function that is the heart of the script,
-            stops when... TODO
-        '''
+        """Recursive function that is the heart of the script,
+        stops when... TODO
+        """
 
         # dont download same link twice
         if url not in downloaded_urls:
@@ -79,13 +89,15 @@ def download_schema(url):
                 xsd_data = download_xml_url(url)
 
             except urllib.error.URLError as e:
-                print('ERROR loading {} , referenced in {} REASON: {} '
-                      .format(url, referring_url, e.reason))
+                print(
+                    "ERROR loading {} , referenced in {} REASON: {} ".format(
+                        url, referring_url, e.reason
+                    )
+                )
                 return
 
             # all the XSDs linked from this file via schemaLocation
-            schema_locations = re.findall(
-                'schemaLocation="([^"]*)"', xsd_data)
+            schema_locations = re.findall('schemaLocation="([^"]*)"', xsd_data)
 
             # write this file in the directory structure
             save_file(url, xsd_data)
@@ -107,12 +119,12 @@ def download_schema(url):
 
 
 @click.command()
-@click.argument('xsd_url')
+@click.argument("xsd_url")
 def main(xsd_url: str):
     """Recursive xsd downloader that suports relative imports"""
     print("Downloading schema files:")
     download_schema(xsd_url)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
