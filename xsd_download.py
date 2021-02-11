@@ -1,7 +1,18 @@
+#!/bin/env python3
+# pylint: disable=no-value-for-parameter
+
+"""
+
+XSD Downloader
+
+"""
+
+
 import os
 import re
 import urllib.request
 from urllib.parse import urljoin, urlparse
+
 import click
 from lxml import etree
 
