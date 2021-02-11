@@ -1,3 +1,5 @@
+[![GitHub Super-Linter](https://github.com/n-a-t-e/xsd_download/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
 # Recursive .xsd Schema downloader
 
 Use this Python 3 script to recursively download an XSD schema and all linked schemas. This lets you quickly validate an xml record using a tool such as `xmllint`.
@@ -27,7 +29,7 @@ Your schema ends up in a folder called 'xsd'
 
 Then if you have `xmllint` installed, you can validate an XML file called `myrecord.xml` by running:
 
-`xmlllint --noout --schema ./xsd/standards.iso.org/iso/19115/-3/mdb/1.0/mdb.xsd myrecord.xml`
+`xmllint --noout --schema ./xsd/standards.iso.org/iso/19115/-3/mdb/1.0/mdb.xsd myrecord.xml`
 
 ## Run tests
 
