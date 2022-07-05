@@ -1,8 +1,8 @@
-# Recursive .xsd Schema downloader
+# XML Schema Downloader
 
 [![GitHub Super-Linter](https://github.com/n-a-t-e/xsd_download/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
-Use this Python 3 script to recursively download an XSD schema and all linked schemas. This lets you quickly validate an xml record using a tool such as `xmllint`.
+Use this Python script to recursively download an XML schema (XSD) and all linked schemas. This lets you quickly validate an xml record using a tool such as `xmllint`.
 
 It supports relative XSD schemaLocations, eg `<import schemaLocation="../../../../abc`.
 
