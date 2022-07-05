@@ -11,17 +11,17 @@ It supports relative XSD schemaLocations, eg `<import schemaLocation="../../../.
 If needed, install `virtualenv`. Install repo in a new Python 3 environment:
 
 ```sh
-pip install virtualenv --user
-virtualenv -p python3 venv
+pip install venv --user
+python -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip install .
 ```
 
 ## Running
 
 Run the script with your favorite .xsd URL:
 
-`python xsd_download.py https://standards.iso.org/iso/19115/-3/mdb/1.0/mdb.xsd`
+`python -m xsd_download https://standards.iso.org/iso/19115/-3/mdb/1.0/mdb.xsd`
 
 Your schema ends up in a folder called 'xsd'
 
@@ -33,4 +33,4 @@ Then if you have `xmllint` installed, you can validate an XML file called `myrec
 
 ## Run tests
 
-`python tests.py`
+`python tests/tests.py`
