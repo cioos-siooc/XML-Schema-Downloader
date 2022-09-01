@@ -36,3 +36,23 @@ Then if you have `xmllint` installed, you can validate an XML file called `myrec
 ## Run tests
 
 `python tests/tests.py`
+
+## Docker
+
+You can create a Docker image containing the script. This way you don't need to setup any python and venv.
+
+### Build image
+
+```shell
+docker build -t cioos-siooc/xml-schema-downloader:1.0 .
+
+```
+
+### Run image
+
+Run the image with your favorite .xsd URL:
+
+```shell
+docker run --rm -v `pwd`:`pwd` -w `pwd` cioos-siooc/xml-schema-downloader:1.0 https://standards.iso.org/iso/19115/-3/mdb/1.0/mdb.xsd
+
+```
