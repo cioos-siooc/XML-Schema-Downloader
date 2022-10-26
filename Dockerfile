@@ -4,4 +4,4 @@ COPY . .
 
 RUN pip install .
 
-CMD [ "python", "-m", "xsd_download" ]
+ENTRYPOINT [ "python", "-m", "xsd_download" ]
