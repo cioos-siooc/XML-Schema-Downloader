@@ -23,7 +23,7 @@ pip install .
 
 Run the script with your favorite .xsd URL:
 
-`python -m xsd_download https://standards.iso.org/iso/19115/-3/mdb/1.0/mdb.xsd`
+`python -m xsd_download https://schemas.isotc211.org/19115/-3/mdb/2.0/mdb.xsd`
 
 Your schema ends up in a folder called 'xsd'
 
@@ -31,7 +31,7 @@ Your schema ends up in a folder called 'xsd'
 
 Then if you have `xmllint` installed, you can validate an XML file called `myrecord.xml` by running:
 
-`xmllint --noout --schema ./xsd/standards.iso.org/iso/19115/-3/mdb/1.0/mdb.xsd myrecord.xml`
+`xmllint --noout --schema ./xsd/schemas.isotc211.org/19115/-3/mdb/2.0/mdb.xsd myrecord.xml`
 
 ## Run tests
 
@@ -53,6 +53,6 @@ docker build -t cioos-siooc/xml-schema-downloader:1.0 .
 Run the image with your favorite .xsd URL:
 
 ```shell
-docker run --rm -v `pwd`:`pwd` -w `pwd` cioos-siooc/xml-schema-downloader:1.0 https://standards.iso.org/iso/19115/-3/mdb/1.0/mdb.xsd
+docker run --rm -v `pwd`:`pwd` -w `pwd` cioos-siooc/xml-schema-downloader:1.0 https://schemas.isotc211.org/19115/-3/mdb/2.0/mdb.xsd
 
 ```
