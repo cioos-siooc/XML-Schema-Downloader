@@ -9,7 +9,7 @@ setup(
     url="",
     packages=["xsd_download"],
     install_requires=[
-        "certifi==2016.2.28",
+        "certifi==2022.12.7",
         "Click==7.0",
     ],
 )
