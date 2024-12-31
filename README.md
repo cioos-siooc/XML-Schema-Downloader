@@ -6,7 +6,7 @@
 
 Use this Python script to recursively download an XML schema (XSD) and all linked schemas. This lets you quickly validate an xml record using a tool such as `xmllint`.
 
-It supports relative XSD schemaLocations, eg `<import schemaLocation="../../../../abc`.
+It supports relative XSD schemaLocations, eg `<import schemaLocation="../../../../abcd`.
 
 ## Installation
 
