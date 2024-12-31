@@ -1,7 +1,7 @@
 # XML Schema Downloader
 
-[![GitHub Super-Linter](https://github.com/n-a-t-e/xsd_download/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
-[![Python package](https://github.com/cioos-siooc/XML-Schema-Downloader/actions/workflows/python.yaml/badge.svg)](https://github.com/cioos-siooc/XML-Schema-Downloader/actions/workflows/python.yaml)
+[![GitHub Super-Linter](https://github.com/n-a-t-e/xsd_download/workflows/Lint%20Code%20Base/badge.svg?branch=main)](https://github.com/marketplace/actions/super-linter)
+[![Python package](https://github.com/cioos-siooc/XML-Schema-Downloader/actions/workflows/python.yaml/badge.svg?branch=main)](https://github.com/cioos-siooc/XML-Schema-Downloader/actions/workflows/python.yaml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 Use this Python script to recursively download an XML schema (XSD) and all linked schemas. This lets you quickly validate an xml record using a tool such as `xmllint`.
