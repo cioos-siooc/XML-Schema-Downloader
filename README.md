@@ -1,6 +1,6 @@
 # XML Schema Downloader
 
-[![GitHub Super-Linter](https://github.com/n-a-t-e/xsd_download/workflows/Lint%20Code%20Base/badge.svg?branch=main)](https://github.com/marketplace/actions/super-linter)
+[![Lint Code Base](https://github.com/cioos-siooc/XML-Schema-Downloader/actions/workflows/linter.yaml/badge.svg?branch=main)](https://github.com/cioos-siooc/XML-Schema-Downloader/actions/workflows/linter.yaml)
 [![Python package](https://github.com/cioos-siooc/XML-Schema-Downloader/actions/workflows/python.yaml/badge.svg?branch=main)](https://github.com/cioos-siooc/XML-Schema-Downloader/actions/workflows/python.yaml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
