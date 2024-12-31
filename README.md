@@ -10,7 +10,7 @@ It supports relative XSD schemaLocations, eg `<import schemaLocation="../../../.
 
 ## Installation
 
-If needed, install `virtualenv`. Install repo in a new Python 3 environment:
+If needed, install `virtualenv`. Install repository in a new Python 3 environment:
 
 ```sh
 pip install venv --user
